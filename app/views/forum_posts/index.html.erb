@@ -1,0 +1,37 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Forum</h1>
+    <%= link_to 'New Post', new_forum_post_path, class: 'bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200' %>
+  </div>
+
+  <div class="space-y-4">
+    <% @forum_posts.each do |post| %>
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="flex justify-between items-start">
+          <div>
+            <h2 class="text-xl font-semibold text-gray-800">
+              <%= link_to post.title, post, class: 'hover:text-blue-600' %>
+            </h2>
+            <p class="text-sm text-gray-500 mt-1">
+              Posted by <span class="<%= post.user.belt_color %> font-medium"><%= post.user.name %></span>
+              on <%= post.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+            </p>
+          </div>
+          <% if post.user == current_user %>
+            <div class="flex space-x-2">
+              <%= link_to 'Edit', edit_forum_post_path(post), class: 'text-blue-600 hover:text-blue-800' %>
+              <%= button_to 'Delete', post, method: :delete, class: 'text-red-600 hover:text-red-800', 
+                  data: { confirm: 'Are you sure?' } %>
+            </div>
+          <% end %>
+        </div>
+        <div class="mt-4 text-gray-700">
+          <%= truncate(post.content, length: 200) %>
+        </div>
+        <div class="mt-4">
+          <%= link_to 'Read more', post, class: 'text-blue-600 hover:text-blue-800' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

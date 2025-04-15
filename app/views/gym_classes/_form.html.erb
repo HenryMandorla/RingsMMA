@@ -1,0 +1,44 @@
+<%= form_with(model: gym_class, class: "space-y-6") do |form| %>
+  <% if gym_class.errors.any? %>
+    <div class="bg-red-50 text-red-600 p-4 rounded-lg mb-6">
+      <h2 class="font-semibold mb-2"><%= pluralize(gym_class.errors.count, "error") %> prohibited this gym class from being saved:</h2>
+      <ul class="list-disc list-inside">
+        <% gym_class.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :name, class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" %>
+    </div>
+
+    <div>
+      <%= form.label :max_capacity, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.number_field :max_capacity, class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" %>
+    </div>
+
+    <div>
+      <%= form.label :start_time, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.datetime_local_field :start_time, class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" %>
+    </div>
+
+    <div>
+      <%= form.label :end_time, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.datetime_local_field :end_time, class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" %>
+    </div>
+
+    <div class="md:col-span-2">
+      <%= form.label :description, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= form.text_area :description, rows: 4, class: "w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" %>
+    </div>
+  </div>
+
+  <div class="flex justify-end space-x-4">
+    <%= link_to "Cancel", gym_classes_path, class: "px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50" %>
+    <%= form.submit class: "px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200" %>
+  </div>
+<% end %> 

@@ -1,0 +1,51 @@
+<div class="max-w-7xl mx-auto p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-900">Class Schedule</h1>
+    <%= link_to "Add New Class", new_gym_class_path, class: "px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200" %>
+  </div>
+
+  <div class="grid gap-6">
+    <% Date::DAYNAMES.each do |day| %>
+      <% day_classes = @gym_classes.select { |gc| gc.start_time.strftime("%A") == day } %>
+      <% next if day_classes.empty? %>
+      
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+          <h2 class="text-xl font-semibold text-gray-900"><%= day %></h2>
+        </div>
+        
+        <div class="divide-y divide-gray-200">
+          <% day_classes.sort_by { |gc| gc.start_time.strftime("%H:%M") }.each do |gym_class| %>
+            <div class="p-6 hover:bg-gray-50 transition duration-150">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-medium text-gray-900">
+                    <%= link_to gym_class.name, gym_class_path(gym_class), class: "hover:text-red-600" %>
+                  </h3>
+                  <p class="text-gray-600 mt-1">
+                    <%= gym_class.start_time.strftime("%I:%M %p") %> - <%= gym_class.end_time.strftime("%I:%M %p") %>
+                  </p>
+                  <div class="mt-2 flex items-center space-x-4">
+                    <span class="text-sm text-gray-500">
+                      <% attendance_count = gym_class.attendances.count %>
+                      <%= attendance_count %> / <%= gym_class.max_capacity %> attending
+                    </span>
+                    <% if attendance_count >= gym_class.max_capacity %>
+                      <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full">Class Full</span>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                  <%= link_to "View Details", gym_class_path(gym_class), 
+                      class: "text-sm text-gray-600 hover:text-red-600" %>
+                  <%= link_to "Log Attendance", new_attendance_path(gym_class_id: gym_class.id), 
+                      class: "px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition duration-200" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div> 

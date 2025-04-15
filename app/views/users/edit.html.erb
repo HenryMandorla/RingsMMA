@@ -1,0 +1,49 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-md mx-auto">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Edit Profile</h1>
+
+    <%= form_with(model: @user, class: "space-y-6") do |form| %>
+      <% if @user.errors.any? %>
+        <div class="bg-red-50 text-red-600 p-4 rounded-lg mb-6">
+          <h2 class="font-semibold mb-2"><%= pluralize(@user.errors.count, "error") %> prohibited this update:</h2>
+          <ul class="list-disc list-inside">
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div>
+        <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.text_field :name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" %>
+      </div>
+
+      <div>
+        <%= form.label :belt_level, "Belt Level", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.select :belt_level, 
+            [['White', 'white'], ['Blue', 'blue'], ['Purple', 'purple'], ['Brown', 'brown'], ['Black', 'black']],
+            { include_blank: 'Select belt level' },
+            class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" %>
+      </div>
+
+      <div>
+        <%= form.label :mat_hours, "Mat Hours", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.number_field :mat_hours, 
+            step: '0.1',
+            min: @min_hours,
+            class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" %>
+        <p class="mt-1 text-sm text-gray-500">
+          Minimum hours required for <%= @user.belt_level %> belt: <%= @min_hours %>
+          <br>
+          This will override your calculated hours from class attendance.
+        </p>
+      </div>
+
+      <div class="flex justify-end space-x-3">
+        <%= link_to "Cancel", root_path, class: "bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-200" %>
+        <%= form.submit "Update Profile", class: "bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200" %>
+      </div>
+    <% end %>
+  </div>
+</div> 

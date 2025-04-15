@@ -1,0 +1,66 @@
+<div class="max-w-4xl mx-auto p-6">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900"><%= @gym_class.name %></h1>
+        <p class="text-gray-600 mt-2">
+          <%= @gym_class.start_time.strftime("%A, %B %d, %Y at %I:%M %p") %> - 
+          <%= @gym_class.end_time.strftime("%I:%M %p") %>
+        </p>
+      </div>
+      <div class="flex space-x-4">
+        <%= link_to "Edit Class", edit_gym_class_path(@gym_class), class: "px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200" %>
+        <%= button_to "Delete Class", gym_class_path(@gym_class), method: :delete, 
+            class: "px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-200",
+            data: { turbo_confirm: "Are you sure you want to delete this class?" } %>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Class Details</h2>
+        <div class="space-y-4">
+          <div>
+            <p class="text-sm font-medium text-gray-500">Maximum Capacity</p>
+            <p class="text-lg"><%= @gym_class.max_capacity %> students</p>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-gray-500">Current Attendance</p>
+            <p class="text-lg"><%= @gym_class.attendances.count %> students</p>
+          </div>
+          <div>
+            <p class="text-sm font-medium text-gray-500">Description</p>
+            <p class="text-gray-700"><%= @gym_class.description.presence || "No description provided" %></p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Attendance</h2>
+        <% if @gym_class.attendances.any? %>
+          <div class="space-y-4">
+            <% @gym_class.attendances.order(attended_at: :desc).limit(5).each do |attendance| %>
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="font-medium text-gray-900"><%= attendance.user.name %></p>
+                    <p class="text-sm text-gray-600"><%= attendance.attended_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+                  </div>
+                  <span class="px-3 py-1 text-sm rounded-full bg-green-100 text-green-800">Attended</span>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-gray-600">No attendance records found.</p>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-200 pt-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Log New Attendance</h2>
+      <%= link_to "Log Attendance", new_attendance_path(gym_class_id: @gym_class.id), 
+          class: "inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200" %>
+    </div>
+  </div>
+</div> 

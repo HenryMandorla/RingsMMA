@@ -1,0 +1,14 @@
+<div class="max-w-3xl mx-auto py-8 px-4">
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-2xl font-bold text-gray-900">New Class</h1>
+    <%= link_to gym_classes_path, class: "text-gray-600 hover:text-gray-900" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    <% end %>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm p-6">
+    <%= render 'form', gym_class: @gym_class %>
+  </div>
+</div> 

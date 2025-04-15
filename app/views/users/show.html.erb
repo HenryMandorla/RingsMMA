@@ -1,0 +1,73 @@
+<div class="max-w-4xl mx-auto p-6">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <div class="flex items-center justify-between mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">My Dashboard</h1>
+      <%= link_to "Edit Profile", edit_user_path(@user), class: "px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200" %>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <!-- Belt Level Section -->
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Belt Level</h2>
+        <div class="flex items-center space-x-4">
+          <div class="w-24 h-24 rounded-full flex items-center justify-center <%= @user.belt_color %> text-white text-2xl font-bold">
+            <%= @user.belt_level.capitalize %>
+          </div>
+          <div class="flex-1">
+            <div class="h-8 w-full bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full <%= @user.belt_color %>" style="width: <%= @user.belt_progress %>%"></div>
+            </div>
+            <% belt_info = User::HOURS_FOR_BELT[@user.belt_level] %>
+            <% if @user.belt_level != 'black' %>
+              <p class="text-sm text-gray-600 mt-2">
+                Progress to next belt: <%= format('%.2f%%', @user.belt_progress) %>
+                <br>
+                <span class="text-xs">
+                  (<%= @user.mat_hours %> / <%= belt_info[:next] %> hours needed)
+                </span>
+              </p>
+            <% else %>
+              <p class="text-sm text-gray-600 mt-2">
+                Black Belt achieved! Total mat hours: <%= @user.mat_hours %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mat Hours Section -->
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Mat Hours</h2>
+        <div class="bg-gray-50 rounded-lg p-6">
+          <div class="text-4xl font-bold text-red-600 mb-2"><%= @user.mat_hours %></div>
+          <p class="text-gray-600">Total hours on the mat</p>
+          <div class="mt-4 text-sm text-gray-500">
+            Based on your attended classes
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Attendance Section -->
+      <div class="md:col-span-2">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Attendance</h2>
+        <% if @recent_attendances.any? %>
+          <div class="space-y-4">
+            <% @recent_attendances.each do |attendance| %>
+              <div class="bg-gray-50 p-4 rounded-lg">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="font-medium text-gray-900"><%= attendance.gym_class.name %></p>
+                    <p class="text-sm text-gray-600"><%= attendance.attended_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+                  </div>
+                  <span class="px-3 py-1 text-sm rounded-full bg-green-100 text-green-800">Attended</span>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-gray-600">No recent attendance records found.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div> 

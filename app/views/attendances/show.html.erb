@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow-sm p-6">
+      <h1 class="text-2xl font-bold text-gray-900 mb-6">Attendance Details</h1>
+
+      <div class="space-y-4">
+        <div>
+          <h2 class="text-sm font-medium text-gray-500">Member</h2>
+          <p class="mt-1 text-gray-900"><%= @attendance.user.name %></p>
+        </div>
+
+        <div>
+          <h2 class="text-sm font-medium text-gray-500">Class</h2>
+          <p class="mt-1 text-gray-900"><%= @attendance.gym_class.name %></p>
+          <p class="mt-1 text-sm text-gray-500">
+            <% if @attendance.gym_class.start_time && @attendance.gym_class.end_time %>
+              <%= @attendance.gym_class.start_time.strftime("%I:%M %p") %> - 
+              <%= @attendance.gym_class.end_time.strftime("%I:%M %p") %>
+            <% else %>
+              Not scheduled
+            <% end %>
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-sm font-medium text-gray-500">Attended At</h2>
+          <p class="mt-1 text-gray-900"><%= @attendance.attended_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end space-x-3">
+        <%= link_to "Back to Log", attendances_path, class: "bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-200" %>
+      </div>
+    </div>
+  </div>
+</div>

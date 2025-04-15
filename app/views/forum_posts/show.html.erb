@@ -1,0 +1,55 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <div class="flex justify-between items-start">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-800"><%= @forum_post.title %></h1>
+          <p class="text-sm text-gray-500 mt-1">
+            Posted by <span class="<%= @forum_post.user.belt_color %> font-medium"><%= @forum_post.user.name %></span>
+            on <%= @forum_post.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+          </p>
+        </div>
+        <% if @forum_post.user == current_user %>
+          <div class="flex space-x-2">
+            <%= link_to 'Edit', edit_forum_post_path(@forum_post), class: 'text-blue-600 hover:text-blue-800' %>
+            <%= button_to 'Delete', @forum_post, method: :delete, class: 'text-red-600 hover:text-red-800', 
+                data: { confirm: 'Are you sure?' } %>
+          </div>
+        <% end %>
+      </div>
+      <div class="mt-6 text-gray-700">
+        <%= simple_format(@forum_post.content) %>
+      </div>
+    </div>
+
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Comments</h2>
+      <%= render 'comments/form', comment: @comment, forum_post: @forum_post %>
+      
+      <div class="mt-6 space-y-4">
+        <% @forum_post.comments.each do |comment| %>
+          <div class="border-t pt-4">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-sm text-gray-500">
+                  <span class="<%= comment.user.belt_color %> font-medium"><%= comment.user.name %></span>
+                  commented on <%= comment.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+                </p>
+                <p class="mt-2 text-gray-700"><%= comment.content %></p>
+              </div>
+              <% if comment.user == current_user %>
+                <%= button_to 'Delete', [@forum_post, comment], method: :delete, 
+                    class: 'text-red-600 hover:text-red-800 text-sm',
+                    data: { confirm: 'Are you sure?' } %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <%= link_to 'Back to Forum', forum_posts_path, class: 'text-blue-600 hover:text-blue-800' %>
+    </div>
+  </div>
+</div>

@@ -2,8 +2,14 @@
 
 one:
   name: MyString
-  email: MyString
+  email: user1@example.com
+  password: password123
+  belt_level: white
+  mat_hours: 0
 
 two:
   name: MyString
-  email: MyString
+  email: user2@example.com
+  password: password123
+  belt_level: white
+  mat_hours: 0

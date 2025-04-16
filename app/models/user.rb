@@ -16,12 +16,12 @@ class User < ApplicationRecord
     before_save :ensure_minimum_mat_hours, if: :belt_level_changed?
   
     HOURS_FOR_BELT = {
-      'white' => { min: 0, next: 150 },
-      'blue' => { min: 150, next: 500 },
-      'purple' => { min: 500, next: 800 },
-      'brown' => { min: 800, next: 1200 },
-      'black' => { min: 1200, next: nil }
-    }
+      "white" => { min: 0, next: 150 },
+      "blue" => { min: 150, next: 500 },
+      "purple" => { min: 500, next: 800 },
+      "brown" => { min: 800, next: 1200 },
+      "black" => { min: 1200, next: nil }
+    }.freeze
   
     def mat_hours
       stored_hours = read_attribute(:mat_hours) || 0
@@ -31,23 +31,23 @@ class User < ApplicationRecord
   
     def belt_color
       case belt_level
-      when 'white'
-        'bg-gray-200 text-gray-900'
-      when 'blue'
-        'bg-blue-600 text-white'
-      when 'purple'
-        'bg-purple-600 text-white'
-      when 'brown'
-        'bg-amber-800 text-white'
-      when 'black'
-        'bg-gray-900 text-white'
+      when "white"
+        "bg-gray-200 text-gray-900"
+      when "blue"
+        "bg-blue-600 text-white"
+      when "purple"
+        "bg-purple-600 text-white"
+      when "brown"
+        "bg-amber-800 text-white"
+      when "black"
+        "bg-gray-900 text-white"
       else
-        'bg-gray-200 text-gray-900'
+        "bg-gray-200 text-gray-900"
       end
     end
   
     def belt_progress
-      return 100.00 if belt_level == 'black'
+      return 100.00 if belt_level == "black"
       
       belt_info = HOURS_FOR_BELT[belt_level]
       current_hours = mat_hours
@@ -68,7 +68,7 @@ class User < ApplicationRecord
       total_minutes = attendances
         .joins(:gym_class)
         .where(created_at: week_start..week_end)
-        .sum('EXTRACT(EPOCH FROM (gym_classes.end_time - gym_classes.start_time)) / 60')
+        .sum("EXTRACT(EPOCH FROM (gym_classes.end_time - gym_classes.start_time)) / 60")
       
       (total_minutes / 60.0).round(1)
     end
@@ -76,12 +76,12 @@ class User < ApplicationRecord
     private
   
     def calculate_class_hours
-      total_minutes = attendances.joins(:gym_class).sum('EXTRACT(EPOCH FROM (gym_classes.end_time - gym_classes.start_time)) / 60')
+      total_minutes = attendances.joins(:gym_class).sum("EXTRACT(EPOCH FROM (gym_classes.end_time - gym_classes.start_time)) / 60")
       (total_minutes / 60.0).round(1)
     end
   
     def set_default_belt_level
-      self.belt_level ||= 'white'
+      self.belt_level ||= "white"
       self.mat_hours ||= 0
     end
   

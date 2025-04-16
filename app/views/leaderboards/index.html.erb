@@ -7,16 +7,16 @@
     <div class="bg-white rounded-lg shadow overflow-hidden">
       <div class="divide-y divide-gray-200">
         <% @leaderboard.each do |entry| %>
-          <div class="p-4 flex items-center justify-between <%= entry.rank <= 3 ? 'bg-gray-50' : '' %>">
+          <div class="p-4 flex items-center justify-between <%= entry.rank <= 3 ? "bg-gray-50" : "" %>">
             <div class="flex items-center space-x-4">
               <div class="w-8 h-8 flex items-center justify-center rounded-full
                 <%= case entry.rank
-                    when 1 then 'bg-yellow-400'
-                    when 2 then 'bg-gray-300'
-                    when 3 then 'bg-amber-600'
-                    else 'bg-gray-100'
+                    when 1 then "bg-yellow-400"
+                    when 2 then "bg-gray-300"
+                    when 3 then "bg-amber-600"
+                    else "bg-gray-100"
                     end %>">
-                <span class="text-sm font-semibold <%= entry.rank <= 3 ? 'text-white' : 'text-gray-600' %>">
+                <span class="text-sm font-semibold <%= entry.rank <= 3 ? "text-white" : "text-gray-600" %>">
                   <%= entry.rank %>
                 </span>
               </div>

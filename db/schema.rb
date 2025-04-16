@@ -70,9 +70,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_104006) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "weekly_leaderboards", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.decimal "mat_hours", precision: 10, scale: 2
+    t.integer "rank"
+    t.date "week_start_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_weekly_leaderboards_on_user_id"
+    t.index ["week_start_date", "rank"], name: "index_weekly_leaderboards_on_week_start_date_and_rank"
+  end
+
   add_foreign_key "attendances", "gym_classes"
   add_foreign_key "attendances", "users"
   add_foreign_key "comments", "forum_posts"
   add_foreign_key "comments", "users"
   add_foreign_key "forum_posts", "users"
+  add_foreign_key "weekly_leaderboards", "users"
 end

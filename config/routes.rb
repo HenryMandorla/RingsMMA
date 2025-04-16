@@ -28,4 +28,5 @@ Rails.application.routes.draw do
   root "gym_classes#index"
 
   # Define other routes as needed
+  resources :leaderboards, only: [:index]
 end

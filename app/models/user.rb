@@ -62,6 +62,17 @@ class User < ApplicationRecord
       [progress, 100.00].min
     end
   
+    def weekly_mat_hours(week_start = Date.current.beginning_of_week)
+      week_end = week_start.end_of_week
+      
+      total_minutes = attendances
+        .joins(:gym_class)
+        .where(created_at: week_start..week_end)
+        .sum('EXTRACT(EPOCH FROM (gym_classes.end_time - gym_classes.start_time)) / 60')
+      
+      (total_minutes / 60.0).round(1)
+    end
+  
     private
   
     def calculate_class_hours

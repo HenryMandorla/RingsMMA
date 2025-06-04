@@ -3,13 +3,13 @@
 one:
   name: MyString
   email: user1@example.com
-  password: password123
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>
   belt_level: white
   mat_hours: 0
 
 two:
   name: MyString
   email: user2@example.com
-  password: password123
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>
   belt_level: white
   mat_hours: 0

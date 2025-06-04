@@ -1,3 +1,5 @@
+include Pundit::Authorization
+
 class ForumPostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_forum_post, only: [:show, :edit, :update, :destroy]

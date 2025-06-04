@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem 'pundit'
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
 gem 'rubocop-performance', require: false

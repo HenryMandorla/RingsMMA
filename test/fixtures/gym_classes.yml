@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  schedule: 2025-04-07 21:47:31
+  name: Kickboxing
+  start_time: 2025-06-04 14:00:00
+  end_time: 2025-06-04 15:00:00
 
 two:
-  name: MyString
-  schedule: 2025-04-07 21:47:31
+  name: Kickboxing2
+  start_time: 2025-05-04 14:00:00
+  end_time: 2025-05-04 15:00:00

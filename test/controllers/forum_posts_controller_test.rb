@@ -58,4 +58,3 @@ class ForumPostsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to forum_posts_url
   end
 end
-

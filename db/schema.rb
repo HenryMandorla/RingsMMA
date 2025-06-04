@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_15_104006) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_10_015150) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_104006) do
     t.datetime "updated_at", null: false
     t.index ["gym_class_id"], name: "index_attendances_on_gym_class_id"
     t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
+
+  create_table "class_learnings", force: :cascade do |t|
+    t.text "content"
+    t.bigint "gym_class_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gym_class_id"], name: "index_class_learnings_on_gym_class_id"
+    t.index ["user_id"], name: "index_class_learnings_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -83,6 +93,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_104006) do
 
   add_foreign_key "attendances", "gym_classes"
   add_foreign_key "attendances", "users"
+  add_foreign_key "class_learnings", "gym_classes"
+  add_foreign_key "class_learnings", "users"
   add_foreign_key "comments", "forum_posts"
   add_foreign_key "comments", "users"
   add_foreign_key "forum_posts", "users"

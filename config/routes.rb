@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   get "forum_posts/destroy"
   # Define routes for attendances (you might want more actions later)
   resources :attendances, only: [:index, :new, :create, :show]
-  resources :gym_classes
+  resources :gym_classes do
+    member do
+      post :add_learning
+    end
+  end
   resources :forum_posts do
     resources :comments, only: [:create, :destroy]
   end
